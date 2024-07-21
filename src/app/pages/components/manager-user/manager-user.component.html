@@ -1,0 +1,88 @@
+<div class="flex flex-col">
+  <h2 class="text-2xl font-semibold my-2">Datos personales</h2>
+  <form [formGroup]="form">
+  <div class="grid grid-cols-3 gap-2">
+    <div class="flex flex-col">
+      <label class="font-semibold">Nombres <small class="text-red-600 text-lg">*</small>:</label>
+      <input nz-input type="text" formControlName="name" placeholder="Nombres"
+      [nzStatus]="form.get('name')?.touched && form.get('name')?.invalid ? form.get('name')?.errors?.['required']?'error':form.get('name')?.touched && form.get('name')?.invalid?form.get('name')?.errors?.['minlength']?'warning':'':'':''"
+       />
+      <div *ngIf="form.get('name')?.touched && form.get('name')?.invalid">
+        <small class="text-red-600" *ngIf="form.get('name')?.errors?.['required']">El nombre es requerido.</small>
+        <small class="text-yellow-600" *ngIf="form.get('name')?.errors?.['minlength']">Minimo 5 caracteres.</small>
+      </div>
+    </div>
+    <div class="flex flex-col">
+      <label class="font-semibold">Apellidos<small class="text-red-600 text-lg">*</small>:</label>
+      <input nz-input  type="text" formControlName="lastName" placeholder="Apellidos "  [nzStatus]="form.get('lastName')?.touched && form.get('lastName')?.invalid ? form.get('lastName')?.errors?.['required']?'error':form.get('lastName')?.touched && form.get('lastName')?.invalid?form.get('lastName')?.errors?.['minlength']?'warning':'':'':''"/>
+      <div *ngIf="form.get('lastName')?.touched && form.get('lastName')?.invalid">
+        <small class="text-red-600" *ngIf="form.get('lastName')?.errors?.['required']">El apellido es requerido.</small>
+        <small class="text-yellow-600" *ngIf="form.get('lastName')?.errors?.['minlength']">Minimo 5 caracteres.</small>
+      </div>
+    </div>
+    <div class="flex flex-col">
+      <label class="font-semibold">Tipo Documento<small class="text-red-600 text-lg">*</small>:</label>
+      <nz-select  formControlName="documentType" nzPlaceHolder="Seleccione" [nzStatus]="form.get('documentType')?.touched && form.get('documentType')?.invalid?
+      form.get('documentType')?.errors?.['required']?'error':'':''" >
+          <nz-option nzLabel="Cedula de ciudadania" nzValue="CC"></nz-option>
+          <nz-option nzLabel="Tarjeta de identidad" nzValue="TI"></nz-option>
+          <nz-option nzLabel="Cedula de extranjeria" nzValue="CE"></nz-option>
+      </nz-select>
+      <div *ngIf="form.get('documentType')?.touched && form.get('documentType')?.invalid">
+        <small class="text-red-600" *ngIf="form.get('documentType')?.errors?.['required']">El tipo de documento es requerido.</small>
+
+      </div>
+    </div>
+    <div class="flex flex-col">
+      <label class="font-semibold"># Documento<small class="text-red-600 text-lg">*</small>:</label>
+      <input nz-input formControlName="documentNumber" placeholder="Numero de documento "
+        [nzStatus]="form.get('documentNumber')?.touched && form.get('documentNumber')?.invalid ?
+                    form.get('documentNumber')?.errors?.['required']?
+                     'error' :
+                    form.get('documentNumber')?.touched && form.get('documentNumber')?.invalid ?
+                    form.get('documentNumber')?.errors?.['minlength']?
+                    'warning':
+                    '':'':''"/>
+      <div *ngIf="form.get('documentNumber')?.touched && form.get('documentNumber')?.invalid">
+        <small class="text-red-600" *ngIf="form.get('documentNumber')?.errors">El # de documento es requerido.</small><br>
+        <small class="text-yellow-600" *ngIf="form.get('documentNumber')?.errors?.['minlength']">Minimo 9 caracteres.</small>
+
+      </div>
+    </div>
+    <div class="flex flex-col">
+      <label class="font-semibold">Correo<small class="text-red-600 text-lg">*</small>:</label>
+      <input nz-input formControlName="email" placeholder="Correo " [nzStatus]="form.get('email')?.touched && form.get('email')?.invalid ? form.get('email')?.errors?.['required']?'error':form.get('email')?.touched && form.get('email')?.invalid?form.get('email')?.errors?.['pattern']?'warning':'':'':''"/>
+      <div *ngIf="form.get('email')?.touched && form.get('email')?.invalid">
+        <small class="text-red-600" *ngIf="form.get('email')?.errors">El correo es requerido.</small> <br>
+        <small class="text-yellow-600" *ngIf="form.get('email')?.errors?.['pattern']">Correo incorrecto.</small>
+
+      </div>
+    </div>
+       <div class="col-span-3" formGroupName="dataUser" *ngIf="(form.value.documentNumber && form.value.name && form.value.lastName) || nzData">
+        <div class="flex gap-2">
+          <div class="flex flex-col">
+            <label class="font-semibold">Usuario<small class="text-red-600 text-lg">*</small>:</label>
+            <input nz-input formControlName="username" placeholder="Username">
+          </div>
+          <div class="flex flex-col">
+            <label class="font-semibold">Contraseña<small class="text-red-600 text-lg">*</small>:</label>
+            <input nz-input formControlName="password" placeholder="Contraseña " [nzStatus]="form.get('dataUser.password')?.touched && form.get('dataUser.password')?.invalid ? form.get('dataUser.password')?.errors?.['required']?'error':form.get('dataUser.password')?.touched && form.get('dataUser.password')?.invalid?form.get('dataUser.password')?.errors?.['minlength']?'warning':'':'':''"/>
+            <div *ngIf="form.get('dataUser.password')?.touched && form.get('dataUser.password')?.invalid">
+              <small class="text-red-600" *ngIf="form.get('dataUser.password')?.errors">La contraseña es requerida.</small><br>
+             <small class="text-yellow-600" *ngIf="form.get('dataUser.password')?.errors?.['minlength']">Minimo 6 caracteres.</small>
+
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+
+  </div>
+  </form>
+  <div class="flex gap-2 mt-3 justify-end ">
+    <button nz-button nzType="primary" (click)="cancel()"  [nzLoading]="loadingManager">Cancelar</button>
+    <button nz-button nzType="primary" (click)="SaveOrEdit()" [disabled]="form.invalid" [nzLoading]="loadingManager">{{nzData?'Editar':'Aceptar'}}</button>
+
+  </div>
+  </div>
